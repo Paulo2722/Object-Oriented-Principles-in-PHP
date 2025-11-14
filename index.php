@@ -1,28 +1,40 @@
 <?php
 
-class PlayList{
-    /**
-     * @param Song[] $songs
-     */
+class User{
 
-    public function __construct(public $name, public array $songs){
+}
+
+class Newsletter{
+
+    public function __construct(public NewsletterProvider $provider){
+        //
+    }
+
+    public function subscribe(User $user){
+        $this->provider->addToList('default', $user->email);
+
+        //Update the user and mark them as suscribed
+        $user->update(['subscribed' => true]);
+
+        return true;
     }
 }
 
+interface NewsletterProvider{
+    public function addToList(string $list, string $email): void;
+}
 
-class Song{
-    public function __construct(public string $name, public string $artist){
+class PostmarkProvider implements NewsletterProvider{
+    public function addToList(string $list, string $email): void{
+        //Interact with CompaignMonitor
+        $cm = new PostmarkAPI('dabhubafbuab');
 
+        $list = $cm->addToDefaultList($email);
     }
-
 }
 
-$songs = [
-    new Song('My Heart Will Go On', 'Celine Dion')
-];
+$newsletter = new Newsletter(
+    new PostmarkProvider()
+);
 
-$playlist = new PlayList('90s Movie Soundtracks', $songs);
-
-foreach($playlist->songs as $song){
-    var_dump($song->artist);
-}
+$newsletter->subscribe(new User);
