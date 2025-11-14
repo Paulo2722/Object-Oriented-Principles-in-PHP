@@ -1,55 +1,28 @@
 <?php
 
 class PlayList{
+    /**
+     * @param Song[] $songs
+     */
 
-    public function __construct(public $name, public $songs){
-    }
-
-    public function shuffle(){
-        shuffle($this->songs);
-    }
-}
-
-$playlists = [];
-
-$playlists[] = new PlayList('80s Headbangers', [
-    'Back in Black',
-    'Hells Bells',
-    'Highway to Hell'
-]);
-
-die(var_dump($playList));
-
-
-
-
-/*
-class Post{
-    
-    public function archive(){
-
-    }
-
-    public function share(){
-
+    public function __construct(public $name, public array $songs){
     }
 }
 
-class Coment{
 
-    public function respond(){
+class Song{
+    public function __construct(public string $name, public string $artist){
 
     }
+
 }
 
-class Photo{
+$songs = [
+    new Song('My Heart Will Go On', 'Celine Dion')
+];
 
-    public function convert(){
+$playlist = new PlayList('90s Movie Soundtracks', $songs);
 
-    }
-
-    public function upscalse(){
-
-    }
+foreach($playlist->songs as $song){
+    var_dump($song->artist);
 }
-*/
