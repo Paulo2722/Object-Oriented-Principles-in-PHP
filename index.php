@@ -1,40 +1,33 @@
 <?php
 
-class User{
+abstract class Achievement{
+    public function __construct(
+        public string $name,
+        public string $description,
+        public string $icon
+    ){
 
-}
-
-class Newsletter{
-
-    public function __construct(public NewsletterProvider $provider){
-        //
     }
 
-    public function subscribe(User $user){
-        $this->provider->addToList('default', $user->email);
+    abstract public function qualifier(User $user);
+}
 
-        //Update the user and mark them as suscribed
-        $user->update(['subscribed' => true]);
-
-        return true;
+class FirstPostAchievement extends Achievement{
+    public function qualifier(User $user){
+        // TODO: Implements qualifier() method.
     }
 }
 
-interface NewsletterProvider{
-    public function addToList(string $list, string $email): void;
-}
-
-class PostmarkProvider implements NewsletterProvider{
-    public function addToList(string $list, string $email): void{
-        //Interact with CompaignMonitor
-        $cm = new PostmarkAPI('dabhubafbuab');
-
-        $list = $cm->addToDefaultList($email);
+class TalkativeAchievement extends Achievement{
+    public function qualifier(User $user){
+        //$user->comments()->count() >= 200;
     }
 }
 
-$newsletter = new Newsletter(
-    new PostmarkProvider()
-);
-
-$newsletter->subscribe(new User);
+//$firstPost = new Achievement(
+//    'First Post',
+//    'Granted when you create your first post.',
+//    'first-post.svg'
+//);
+//
+//echo $firstPost->qualifier(new User) ? 'They qualify' : 'They do not qualify';
