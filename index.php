@@ -1,47 +1,23 @@
 <?php
 
-interface CanBeLiked{
-    public function like();
-    public function isLiked();
-}
+class Person{
+    public function __construct(public string $name){
 
-class Comment implements CanBeLiked{
-    public function like(){
-        echo 'Like the comment';
     }
 
-    public function isLiked(){
-        return false;
-    }
-}
+    public function job(){
 
-class Post implements CanBeLiked{
-    public function like(){
-        echo 'Like the post';
     }
 
-    public function isLiked(){
-        return false;
+    public function favoriteTeam(){
+
+    }
+
+    protected function thingsThatKeepUpAtNight(){
+        return 'Bob is afraid of dying';
     }
 }
 
-class Thread implements CanBeLiked{
-    public function like(){
-        echo 'Like the thread';
-    }
+$bob = new Person('bob');
 
-    public function isLiked(){
-        return false;
-    }
-}
-
-class PerformLike{
-    public function handle(CanBeLiked $model){
-        if ($model->isLiked()){
-            return;
-        }
-
-        $model->like();
-    }
-}
-(new PerformLike())->handle(new Thread);
+var_dump($bop->name);
