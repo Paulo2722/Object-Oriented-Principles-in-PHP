@@ -1,23 +1,21 @@
 <?php
 
-class Person{
-    public function __construct(public string $name){
-
+class User{
+    public private(set) string $email{
+        get => str_replace('@', '(at)', $this->email);
     }
 
-    public function job(){
-
+    public function __construct(string $email){
+        $this->email = $email;
     }
 
-    public function favoriteTeam(){
-
-    }
-
-    protected function thingsThatKeepUpAtNight(){
-        return 'Bob is afraid of dying';
+    public function updateEmail(string $email){
+        $this->email = $email;
     }
 }
 
-$bob = new Person('bob');
+$user = new User('paulo@escanellas.com');
 
-var_dump($bop->name);
+$user->updateEmail('ndainijnijsd');
+
+echo $user->email;
