@@ -1,21 +1,43 @@
 <?php
 
-class User{
-    public private(set) string $email{
-        get => str_replace('@', '(at)', $this->email);
+class Subscription{
+    public function __construct(
+        protected BillingPortal $billingPortal
+    ){
+    }
+    protected function create(){
+        $this->billingPortal->getCustomer();
     }
 
-    public function __construct(string $email){
-        $this->email = $email;
+    public function cancel(){
+    
     }
-
-    public function updateEmail(string $email){
-        $this->email = $email;
+    public function swap(string $newPlan){
+    
+    }
+    
+    public function invoice(){
+    
     }
 }
 
-$user = new User('paulo@escanellas.com');
+interface BillingPortal{
+    public function getCustomer();
+    public function getSubscription();
+}
 
-$user->updateEmail('ndainijnijsd');
+class StripeBillingPortal implements BillingPortal{
+    public function getCustomer(){
+        //TODO: Implement getCustomer() method.
+    }
 
-echo $user->email;
+    public function getSubscription(){
+        //TODO: Implement getSubscription() method.
+    }
+}
+
+$subscription = new Subscription(
+    new StripeBillingPortal()
+);
+
+$subscription->create();
