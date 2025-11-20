@@ -1,33 +1,47 @@
 <?php
 
-abstract class Achievement{
-    public function __construct(
-        public string $name,
-        public string $description,
-        public string $icon
-    ){
-
-    }
-
-    abstract public function qualifier(User $user);
+interface CanBeLiked{
+    public function like();
+    public function isLiked();
 }
 
-class FirstPostAchievement extends Achievement{
-    public function qualifier(User $user){
-        // TODO: Implements qualifier() method.
+class Comment implements CanBeLiked{
+    public function like(){
+        echo 'Like the comment';
+    }
+
+    public function isLiked(){
+        return false;
     }
 }
 
-class TalkativeAchievement extends Achievement{
-    public function qualifier(User $user){
-        //$user->comments()->count() >= 200;
+class Post implements CanBeLiked{
+    public function like(){
+        echo 'Like the post';
+    }
+
+    public function isLiked(){
+        return false;
     }
 }
 
-//$firstPost = new Achievement(
-//    'First Post',
-//    'Granted when you create your first post.',
-//    'first-post.svg'
-//);
-//
-//echo $firstPost->qualifier(new User) ? 'They qualify' : 'They do not qualify';
+class Thread implements CanBeLiked{
+    public function like(){
+        echo 'Like the thread';
+    }
+
+    public function isLiked(){
+        return false;
+    }
+}
+
+class PerformLike{
+    public function handle(CanBeLiked $model){
+        if ($model->isLiked()){
+            return;
+        }
+
+        $model->like();
+    }
+}
+(new PerformLike())->handle(new Thread);
